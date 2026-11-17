@@ -10,6 +10,7 @@ namespace RestaurantOrderSystem
         static void Main(string[] args)
         {
             Console.WriteLine("JAMES");
+            Console.Writeline("Mart");
         }
     }
 }

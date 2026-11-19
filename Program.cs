@@ -11,7 +11,7 @@ namespace RestaurantOrderSystem
         {
             Console.WriteLine("JAMES");
            
-            Console.WriteLine("test");
+            Console.WriteLine("mART");
         }
     }
 }

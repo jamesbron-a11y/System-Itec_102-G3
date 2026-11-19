@@ -1,5 +1,5 @@
-﻿// PERSON 1 - Person1_MainAndData.cs
-// Laman: constants, menu data, cart, Main, ShowMainMenu
+﻿// PERSON 4 - Person4_CustomerView.cs
+// Laman: CustomerView, AddItemToCart, ReviewAndConfirm
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,77 +9,38 @@ namespace RestaurantOrderSystem
 {
     partial class Program
     {
-        const string RestaurantName = "Injels Burger";
-        const int MaxQuantity = 99;
-        static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
-        static readonly string OrdersFolder = Path.Combine(AppContext.BaseDirectory, "records");
-
-        static readonly string OrdersPath = Path.Combine(OrdersFolder, "orders.txt");
-
-        // CUR 2: menu data in arrays with matching indexes
-        static readonly string[] menuNames =
+        // ============================ CUSTOMER VIEW ===========================
+        static void CustomerView()
         {
-            "Regular Burger", "Cheese Burger", "Double Burger",
-            "Burger with Egg", "Hotdog Sandwich", "Footlong", "French Fries", "Softdrinks",
-            "Buy 1 Take 1 Regular Burger", "Buy 1 Take 1 Cheese Burger", "Buy 1 Take 1 Regular Burger",
-            "Chicken Burger", "Bacon Cheeseburger", "Buy 1 Take 1 Footlong"
+            bool done = false;
 
-        };
-        static readonly decimal[] menuPrices = {  35.00m, 45.00m, 65.00m, 30.00m, 48.00m, 45.00m,
-                            30.00m, 20.00m, 60.00m, 80.00m, 60.00m, 55.00m,75.00m, 90.00m };
-
-        // CUR 3: cart quantities, same index as the menu
-        static int[] cartQuantities = new int[menuNames.Length];
-
-        // ============================ MAIN ============================
-        static void Main(string[] args)
-        {
-            bool running = true;
-
-            // CUR 1: main navigation loop
-            while (running)
+            while (!done)
             {
-                ShowMainMenu();
+                ShowFoodMenu();
+                Console.WriteLine();
+                Console.WriteLine("1. Add item");
+                Console.WriteLine("2. Review order / Checkout");
+                Console.WriteLine("3. Cancel order and return to main menu");
                 int choice = ReadNumberInRange("Choose (1-3): ", 1, 3);
 
                 switch (choice)
                 {
                     case 1:
-                        CustomerView();
+                        AddItemToCart();
                         break;
                     case 2:
-                        CashierView();
+                        done = ReviewAndConfirm();
                         break;
                     case 3:
-                        running = false;
+                        ClearCart();
+                        Console.WriteLine("Order canceled. Cart cleared.");
+                        done = true;
                         break;
                     default:
-                        break; // invalid input already reported
+                        break;
                 }
             }
-
-            Console.WriteLine("Thank you! Program ended.");
         }
 
-        static void ShowMainMenu()
-        {
-            Console.WriteLine("\n");
-            Console.WriteLine("\t========================================");
-            Console.WriteLine("\t           INJELS BURGER");
-            Console.WriteLine("\t         RESTAURANT SYSTEM");
-            Console.WriteLine("\t========================================");
-
-            Console.WriteLine("\n\t[ MAIN MENU ]\n");
-
-            Console.WriteLine("\t1. Customer View");
-            Console.WriteLine("\t2. Cashier View");
-            Console.WriteLine("\t3. Exit");
-
-            Console.WriteLine("\n\t========================================");
-        }
-    }
-}
-
-        }
-    }
-}
+        // CUR 3: order entry. Invalid input never changes the cart.
+       

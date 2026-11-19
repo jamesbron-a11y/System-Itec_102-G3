@@ -49,4 +49,11 @@ namespace RestaurantOrderSystem
                 Console.WriteLine("ERROR: Could not read saved orders.");
                 return;
             }
+            if (records.Count == 0)
+            {
+                Console.WriteLine("No saved orders yet.");
+                return;
+            }
+
+            HashSet<string> displayedIds = new HashSet<string>();
 

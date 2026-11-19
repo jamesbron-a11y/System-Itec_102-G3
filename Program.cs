@@ -19,3 +19,25 @@ namespace RestaurantOrderSystem
                 Console.WriteLine("Order ID cannot be blank. Please type an ID such as ORD0001.");
                 return;
             }
+
+            List<string[]> records = ReadSavedRecords();
+            if (records == null)
+            {
+                Console.WriteLine("ERROR: Could not read the saved orders file.");
+                return;
+            }
+
+            List<string[]> matches = new List<string[]>();
+            foreach (string[] fields in records)
+            {
+                if (fields[0] == id)
+                {
+                    matches.Add(fields);
+                }
+            }
+
+            if (matches.Count == 0)
+            {
+                Console.WriteLine("Order not found.");
+                return;
+            }

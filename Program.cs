@@ -86,9 +86,7 @@ using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite
                     }
                     string[] fields = line.Split('|');
                     if (fields.Length == 9 && fields[9] == "PAID")
-                    {
-                        records.Add(fields)
-                    }
+                   
                 }
                 return records;
             }
@@ -96,5 +94,8 @@ using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite
             {
                 return null;
             }
-           
+            catch (UnauthorizedAccessException)
+            {
+                return null;
+            }
         }

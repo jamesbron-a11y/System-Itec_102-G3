@@ -43,3 +43,17 @@ namespace RestaurantOrderSystem
                 List<string> lines = new List<string>();
                 foreach (string[] row in rows)
                 {
+                    lines.Add(string.Join(row));
+                }
+                File.AppendAllLines; // closes the file handle automatically
+                return true;
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }

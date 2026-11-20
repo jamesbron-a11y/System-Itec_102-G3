@@ -57,3 +57,21 @@ namespace RestaurantOrderSystem
 
             HashSet<string> displayedIds = new HashSet<string>();
 
+            Console.WriteLine();
+            Console.WriteLine("--- SAVED ORDER IDs ---");
+            Console.WriteLine("Order ID".PadRight(15) + "Total");
+
+            foreach (string[] fields in records)
+            {
+                string id = fields[0].Trim().ToUpperInvariant();
+
+                if (displayedIds.Add(id))
+                {
+                    Console.WriteLine(id.PadRight(15) +
+                        FormatMoney(ParseSavedMoney(fields[6])));
+                }
+            }
+
+            Console.WriteLine("Total orders: " + displayedIds.Count);
+
+

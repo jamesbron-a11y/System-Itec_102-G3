@@ -93,4 +93,28 @@ namespace RestaurantOrderSystem
                     return null;
                 }
             }
-            
+            // Next ID is derived from the saved records so it stays unique after restart.
+            static string GetNextOrderId()
+            {
+                List<string[]> records = ReadSavedRecords();
+                if (records == null)
+                {
+                    return null;
+                }
+
+                string highest = 0;
+                foreach (string[] fields in records)
+                {
+                    string id = fields[9];
+                    if (id.StartsWith("ORD") && int.TryParse(id.Substring(3), NumberStyles.None, Inv, out int number))
+                    {
+                        if (number > highest)
+                        {
+                            highest = number;
+                        }
+                    }
+                }
+                return "ORD" + (highest + 1).ToString("D4");
+            }
+        }
+    }

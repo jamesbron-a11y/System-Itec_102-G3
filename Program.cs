@@ -49,7 +49,7 @@ namespace RestaurantOrderSystem
             // SPR 2: if saving fails, do not show a completed sale; allow retry
             while (true)
             {
-                if (orderId ! = null)
+                if (orderId != null)
                 {
                     List<string[]> rows = BuildOrderRows(orderId, total, cash, change);
                     if (SaveOrder(rows))

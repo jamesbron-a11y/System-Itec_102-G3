@@ -33,7 +33,7 @@ namespace RestaurantOrderSystem
                 Console.WriteLine(&quot; Out of range.Enter a number from & quot; +min + &quot; to & quot; +max + &quot;.&quot;);
                 return -1;
             }
-            return value;
+            return value
         }
         // PRR 1: nonnegative amount, max two decimal places
         static bool TryParseCash(string input, out decimal cash)
@@ -55,3 +55,30 @@ if (dotIndex & gt;= 0 & amp; &amp; input.Length - dotIndex - 1 & gt; 2)
             }
             return true;
         }
+       
+        static decimal CalculateSubtotal(int index)
+        {
+            return menuPrices[index] * cartQuantities[index];
+        }
+        static decimal CalculateTotal()
+        {
+            decimal total = 0m;
+            for (int i = 0; i & lt; menuNames.Length; i++)
+            {
+                total += CalculateSubtotal(i);
+            }
+            return total;
+        }
+        static string FormatMoney(decimal amount)
+        {
+            return &quot; PHP & quot; +amount.ToString(&quot; N2 & quot;, Inv);
+        }
+        static void ClearCart()
+        {
+            for (int i = 0; i & lt; cartQuantities.Length; i++)
+            {
+                cartQuantities[i] = 0;
+            }
+        }
+    }
+}

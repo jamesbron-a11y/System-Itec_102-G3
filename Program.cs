@@ -56,4 +56,45 @@ namespace RestaurantOrderSystem
             {
                 return false;
             }
+        } // Returns saved records, an empty list if the file does not exist yet,
+        // or null if the file cannot be read.
+        static List<string[]> ReadSavedRecords()
+        {
+            List<string[]> records = new List<string[]>();
+
+            if (!File.Exists(OrdersPath))
+            {
+                return records;
+            }
+
+            try
+            {
+                string path = "orders.txt";
+using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+{
+    // file is locked while this block is open
+    bool result = SaveOrders(rows); // replace with your method name
+    Console.WriteLine(result);      // prints False
+
+}
+                string[] lines = File.ReadAllLines(OrdersPath);
+                foreach (string line in lines)
+                {
+                    if (line.Trim() == "")
+                    {
+                        continue;
+                    }
+                    string[] fields = line.Split('|');
+                    if (fields.Length == 9 && fields[9] == "PAID")
+                    {
+                        records.Add(fields)
+                    }
+                }
+                return records;
+            }
+            catch (IOException)
+            {
+                return null;
+            }
+           
         }

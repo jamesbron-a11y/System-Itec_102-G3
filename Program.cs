@@ -41,3 +41,6 @@ namespace RestaurantOrderSystem
                 Console.WriteLine("Order not found.");
                 return;
             }
+
+            ShowReceipt(matches);
+        }

@@ -34,4 +34,15 @@ namespace RestaurantOrderSystem
             }
             return rows;
         }
+            return rows;
+        }
+
+        static bool SaveOrder(List<string> rows)
+        {
+            try
+            {
+                Directory.CreateDirectory(OrdersFolder);
+                List<string> lines = new Liststring();
+                foreach (string[] row in rows)
+                
 

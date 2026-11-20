@@ -30,7 +30,7 @@ namespace RestaurantOrderSystem
             List<string[]> matches = new List<string[]>();
             foreach (string[] fields in records)
             {
-                if (fields[0] == id)
+                if (fields[0].ToUpper() == id)
                 {
                     matches.Add(fields);
                 }

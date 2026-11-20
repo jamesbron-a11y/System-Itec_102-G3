@@ -61,8 +61,8 @@ namespace RestaurantOrderSystem
                 }
 
                 Console.WriteLine("ERROR: The order could not be saved. Payment was NOT completed.");
-                string retry = ReadInput("Retry saving? (Y = retry, any other key = go back): ")
-                    if (retry != "Y")
+                string retry = ReadInput("Retry saving? (Y = retry, any other key = go back): ").ToUpper();
+                if (retry != "Y")
                 {
                     return false;
                 }

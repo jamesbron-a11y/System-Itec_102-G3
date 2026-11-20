@@ -73,5 +73,50 @@ namespace RestaurantOrderSystem
             }
 
             Console.WriteLine("Total orders: " + displayedIds.Count);
+        }
+
+        static void CashierView()
+        {
+            bool done = false;
+
+            while (!done)
+            {
+                Console.WriteLine();
+                Console.WriteLine("--- CASHIER VIEW ---");
+                Console.WriteLine("1. Find order by Order ID");
+                Console.WriteLine("2. Display all Order IDs");
+                Console.WriteLine("3. View sales report");
+                Console.WriteLine("4. Delete sales history");
+                Console.WriteLine("5. Return to main menu");
+
+                int choice = ReadNumberInRange("Choose (1-5): ", 1, 5);
+
+                switch (choice)
+                {
+                    case 1:
+                        FindOrder();
+                        break;
+
+                    case 2:
+                        ShowAllOrderIds();
+                        break;
+
+                    case 3:
+                        ShowSales();
+                        break;
+
+                    case 4:
+                        DeleteSalesHistory();
+                        break;
+
+                    case 5:
+                        done = true;
+                        break;
+                }
+            }
+        }
+    }
+}
+
 
 

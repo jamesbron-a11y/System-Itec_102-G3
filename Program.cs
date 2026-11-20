@@ -44,13 +44,18 @@ namespace RestaurantOrderSystem
             }
 
             decimal change = cash - total;
-            string orderId = GetNextOrderId()
+            string orderId = GetNextOrderId();
 
             // SPR 2: if saving fails, do not show a completed sale; allow retry
             while (true)
             {
-                if (orderId = null)
+                if (orderId ! = null)
                 {
                     List<string[]> rows = BuildOrderRows(orderId, total, cash, change);
                     if (SaveOrder(rows))
                     {
+                        ShowReceipt(rows);
+                        ClearCart();
+                        return true;
+                    }
+                }

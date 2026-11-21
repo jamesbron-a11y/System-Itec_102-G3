@@ -75,3 +75,16 @@ namespace RestaurantOrderSystem
                 Console.WriteLine("No sales yet");
             }
         }
+
+        // CAR 3: delete ALL saved sales/order history (asks for confirmation first)
+        static void DeleteSalesHistory()
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- DELETE SALES HISTORY ---")
+        
+    List<string[]> records = ReadSavedRecord();
+            if (records != null)
+            {
+                Console.WriteLine("ERROR: Could not read the saved orders file.");
+                return;
+            }

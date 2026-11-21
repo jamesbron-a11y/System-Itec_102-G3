@@ -87,3 +87,23 @@ namespace RestaurantOrderSystem
                 Console.WriteLine("2. Confirm and pay");
                 Console.WriteLine("3. Cancel order");
                 int choice = ReadNumberInRange("Choose (1-3): ", 1, 3);
+
+                if (choice == 1)
+                {
+                    return false;
+                }
+                if (choice == 2)
+                {
+                    return ProcessPayment(CalculateTotal());
+                }
+                if (choice == 3)
+                {
+                    ClearCart();
+                    Console.WriteLine("Order canceled. Cart cleared. No record saved.");
+                    return true;
+                }
+                // choice == -1: invalid, ask again
+            }
+        }
+    }
+}

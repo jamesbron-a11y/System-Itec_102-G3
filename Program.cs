@@ -43,4 +43,16 @@ namespace RestaurantOrderSystem
         }
 
         // CUR 3: order entry. Invalid input never changes the cart.
-       
+        static void AddItemToCart()
+        {
+            int itemNumber = ReadNumberInRange("Item number (1-" + menuNames.Length + "): ", 1, menuNames.Length);
+            if (itemNumber == -1)
+            {
+                return
+            }
+
+            int quantity = ReadNumberInRange("Quantity (1-" + MaxQuantity + "): ", 1, MaxQuantity);
+            if (quantity == -1)
+            {
+                return;
+            }

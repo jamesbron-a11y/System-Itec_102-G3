@@ -101,7 +101,29 @@ namespace RestaurantOrderSystem
                 }
 
 
+                Console.WriteLine("WARNING: This will permanently delete " + orderIds.Count + " order(s).");
+                Console.WriteLine("Order IDs will start again at ORD0001.");
+                string confirm = ReadInput("Type YES to confirm (anything else cancels): ");
+
+                if (confirm.ToUpper() != "YES")
+                {
+                    Console.WriteLine("Deletion canceled. Sales history was kept.");
+                    return;
+                }
+
+                try
+                {
+                    File.Delete(OrdersPath);
+                    Console.WriteLine("Sales history deleted.");
+                }
+                catch (IOException)
+                {
+                    Console.WriteLine("ERROR: Could not delete the sales history (file may be open in another program).");
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    Console.WriteLine("ERROR: No permission to delete the sales history file.");
+                }
             }
-        }
     }
 }

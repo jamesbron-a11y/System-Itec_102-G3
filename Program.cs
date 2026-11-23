@@ -1,85 +1,84 @@
-﻿// PERSON 1 - Person1_MainAndData.cs
-// Laman: constants, menu data, cart, Main, ShowMainMenu
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-
 namespace RestaurantOrderSystem
 {
     partial class Program
     {
-        const string RestaurantName = "Injels Burger";
-        const int MaxQuantity = 99;
-        static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
-        static readonly string OrdersFolder = Path.Combine(AppContext.BaseDirectory, "records");
-
-        static readonly string OrdersPath = Path.Combine(OrdersFolder, "orders.txt");
-
-        // CUR 2: menu data in arrays with matching indexes
-        static readonly string[] menuNames =
+        // ========================= INPUT HELPERS =========================
+        static string ReadInput(string prompt)
         {
-            "Regular Burger", "Cheese Burger", "Double Burger",
-            "Burger with Egg", "Hotdog Sandwich", "Footlong", "French Fries", "Softdrinks",
-            "Buy 1 Take 1 Regular Burger", "Buy 1 Take 1 Cheese Burger", "Buy 1 Take 1 Regular Burger",
-            "Chicken Burger", "Bacon Cheeseburger", "Buy 1 Take 1 Footlong"
-
-        };
-        static readonly decimal[] menuPrices = {  35.00m, 45.00m, 65.00m, 30.00m, 48.00m, 45.00m,
-                            30.00m, 20.00m, 60.00m, 80.00m, 60.00m, 55.00m,75.00m, 90.00m };
-
-        // CUR 3: cart quantities, same index as the menu
-        static int[] cartQuantities = new int[menuNames.Length];
-
-        // ============================ MAIN ============================
-        static void Main(string[] args)
+            Console.Write(prompt);
+            string input = Console.ReadLine();
+            return (input ?? &quot; &quot;).Trim();
+        }
+        // Returns the number, or -1 if the input is blank / not a whole number / out of range.
+        // NumberStyles.None rejects decimals, signs, spaces and letters. (CUR 5, SPR 3)
+        static int ReadNumberInRange(string prompt, int min, int max)
         {
-            bool running = true;
-
-            // CUR 1: main navigation loop
-            while (running)
-            {
-                ShowMainMenu();
-                int choice = ReadNumberInRange("Choose (1-3): ", 1, 3);
-
-                switch (choice)
-                {
-                    case 1:
-                        CustomerView();
-                        break;
-                    case 2:
-                        CashierView();
-                        break;
-                    case 3:
-                        running = false;
-                        break;
-                    default:
-                        break; // invalid input already reported
-                }
+            string input = ReadInput(prompt);
+            if (input == &quot; &quot;)
+{
+                Console.WriteLine(&quot; Input cannot be blank.&quot;);
+                return -1;
             }
-
-            Console.WriteLine("Thank you! Program ended.");
+            if (!int.TryParse(input, NumberStyles.None, Inv, out int value))
+            {
+                Console.WriteLine(&quot; Invalid input. Enter a whole number only(no letters or decimals).& quot;);
+                return -1;
+            }
+            if (value & lt; min || value & gt; max)
+{
+                Console.WriteLine(&quot; Out of range.Enter a number from & quot; +min + &quot; to & quot; +max + &quot;.&quot;);
+                return -1;
+            }
+            return value;
         }
-
-        static void ShowMainMenu()
+        // PRR 1: nonnegative amount, max two decimal places
+        static bool TryParseCash(string input, out decimal cash)
         {
-            Console.WriteLine("\n");
-            Console.WriteLine("\t========================================");
-            Console.WriteLine("\t           INJELS BURGER");
-            Console.WriteLine("\t         RESTAURANT SYSTEM");
-            Console.WriteLine("\t========================================");
+            cash = 0m;
+            if (input == &quot; &quot;)
+{
+                return false;
+            }
+            if (!decimal.TryParse(input, NumberStyles.AllowDecimalPoint, Inv, out cash))
+            {
+                return false; // text, negative sign, commas, etc.
+            }
+            int dotIndex = input.IndexOf(&#39;.&#39;);
 
-            Console.WriteLine("\n\t[ MAIN MENU ]\n");
-
-            Console.WriteLine("\t1. Customer View");
-            Console.WriteLine("\t2. Cashier View");
-            Console.WriteLine("\t3. Exit");
-
-            Console.WriteLine("\n\t========================================");
+if (dotIndex & gt;= 0 & amp; &amp; input.Length - dotIndex - 1 & gt; 2)
+{
+                return false; // more than two decimal places
+            }
+            return true;
         }
-    }
-}
-
+        // ============================ CALCULATIONS ============================
+        static decimal CalculateSubtotal(int index)
+        {
+            return menuPrices[index] * cartQuantities[index];
+        }
+        static decimal CalculateTotal()
+        {
+            decimal total = 0m;
+            for (int i = 0; i & lt; menuNames.Length; i++)
+            {
+                total += CalculateSubtotal(i);
+            }
+            return total;
+        }
+        static string FormatMoney(decimal amount)
+        {
+            return &quot; PHP & quot; +amount.ToString(&quot; N2 & quot;, Inv);
+        }
+        static void ClearCart()
+        {
+            for (int i = 0; i & lt; cartQuantities.Length; i++)
+            {
+                cartQuantities[i] = 0;
+            }
         }
     }
 }

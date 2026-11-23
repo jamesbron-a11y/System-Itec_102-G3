@@ -21,16 +21,16 @@ namespace RestaurantOrderSystem
             }
 
             List<string[]> records = ReadSavedRecords();
-            if (records = null)                                   
+            if (records == null)
             {
-                Console.WriteLine("ERROR: Could not read the saved orders file.")   
-        return;
+                Console.WriteLine("ERROR: Could not read the saved orders file.");
+                return;
             }
 
             List<string[]> matches = new List<string[]>();
             foreach (string[] fields in records)
             {
-                if (fields[1].ToUpper() == id)                     
+                if (fields[0].ToUpper() == id)
                 {
                     matches.Add(fields);
                 }
@@ -42,7 +42,7 @@ namespace RestaurantOrderSystem
                 return;
             }
 
-            ShowReceipt(matches.Count);                           
+            ShowReceipt(matches);
         }
 
     }

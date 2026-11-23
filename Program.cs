@@ -67,63 +67,63 @@ namespace RestaurantOrderSystem
             }
 
             Console.WriteLine();
-            Console.WriteLine("   SALES REPORT   ");
+            Console.WriteLine("--- SALES REPORT ---");
             Console.WriteLine("Completed orders: " + countedIds.Count);
             Console.WriteLine("Total sales     : " + FormatMoney(totalSales));
             if (countedIds.Count == 0)
             {
                 Console.WriteLine("No sales yet");
             }
+        }
 
-            // CAR 3: delete ALL saved sales/order history (asks for confirmation first)
-            static void DeleteSalesHistory()
+        // CAR 3: delete ALL saved sales/order history (asks for confirmation first)
+        static void DeleteSalesHistory()
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- DELETE SALES HISTORY ---");
+
+            List<string[]> records = ReadSavedRecords();
+            if (records == null)
             {
-                Console.WriteLine();
-                Console.WriteLine("--- DELETE SALES HISTORY ---");
-
-                List<string[]> records = ReadSavedRecords();
-                if (records == null)
-                {
-                    Console.WriteLine("ERROR: Could not read the saved orders file.");
-                    return;
-                }
-
-                HashSet<string> orderIds = new HashSet<string>();
-                foreach (string[] fields in records)
-                {
-                    orderIds.Add(fields[0].ToUpper());
-                }
-
-                if (orderIds.Count == 0)
-                {
-                    Console.WriteLine("No sales history to delete.");
-                    return;
-                }
-
-
-                Console.WriteLine("WARNING: This will permanently delete " + orderIds.Count + " order(s).");
-                Console.WriteLine("Order IDs will start again at ORD0001.");
-                string confirm = ReadInput("Type YES to confirm (anything else cancels): ");
-
-                if (confirm.ToUpper() != "YES")
-                {
-                    Console.WriteLine("Deletion canceled. Sales history was kept.");
-                    return;
-                }
-
-                try
-                {
-                    File.Delete(OrdersPath);
-                    Console.WriteLine("Sales history deleted.");
-                }
-                catch (IOException)
-                {
-                    Console.WriteLine("ERROR: Could not delete the sales history (file may be open in another program).");
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    Console.WriteLine("ERROR: No permission to delete the sales history file.");
-                }
+                Console.WriteLine("ERROR: Could not read the saved orders file.");
+                return;
             }
+
+            HashSet<string> orderIds = new HashSet<string>();
+            foreach (string[] fields in records)
+            {
+                orderIds.Add(fields[0].ToUpper());
+            }
+
+            if (orderIds.Count == 0)
+            {
+                Console.WriteLine("No sales history to delete.");
+                return;
+            }
+
+            Console.WriteLine("WARNING: This will permanently delete " + orderIds.Count + " order(s).");
+            Console.WriteLine("Order IDs will start again at ORD0001.");
+            string confirm = ReadInput("Type YES to confirm (anything else cancels): ");
+
+            if (confirm.ToUpper() != "YES")
+            {
+                Console.WriteLine("Deletion canceled. Sales history was kept.");
+                return;
+            }
+
+            try
+            {
+                File.Delete(OrdersPath);
+                Console.WriteLine("Sales history deleted.");
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("ERROR: Could not delete the sales history (file may be open in another program).");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("ERROR: No permission to delete the sales history file.");
+            }
+        }
     }
 }

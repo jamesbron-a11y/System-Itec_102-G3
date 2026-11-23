@@ -20,6 +20,30 @@ namespace RestaurantOrderSystem
                 return;
             }
 
+            List<string[]> records = ReadSavedRecords();
+            if (records = null)                                   
+            {
+                Console.WriteLine("ERROR: Could not read the saved orders file.")   
+        return;
+            }
+
+            List<string[]> matches = new List<string[]>();
+            foreach (string[] fields in records)
+            {
+                if (fields[1].ToUpper() == id)                     
+                {
+                    matches.Add(fields);
+                }
+            }
+
+            if (matches.Count == 0)
+            {
+                Console.WriteLine("Order not found.");
+                return;
+            }
+
+            ShowReceipt(matches.Count);                           
         }
+
     }
 }

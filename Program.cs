@@ -79,9 +79,9 @@ namespace RestaurantOrderSystem
             static void DeleteSalesHistory()
             {
                 Console.WriteLine();
-                Console.WriteLine("--- DELETE SALES HISTORY ---")                 // ERROR 1: missing semicolon
+                Console.WriteLine("--- DELETE SALES HISTORY ---");
 
-      List<string[]> records = ReadSavedRecords();
+                List<string[]> records = ReadSavedRecords();
                 if (records == null)
                 {
                     Console.WriteLine("ERROR: Could not read the saved orders file.");
@@ -89,17 +89,19 @@ namespace RestaurantOrderSystem
                 }
 
                 HashSet<string> orderIds = new HashSet<string>();
-                foreach (string[] fields in record)                              // ERROR 2: variable name typo (should be records)
+                foreach (string[] fields in records)
                 {
-                    orderIds.Add(fields[1].ToUpper());                           // ERROR 3: wrong index (should be 0)
+                    orderIds.Add(fields[0].ToUpper());
                 }
 
-                if (orderIds.Length == 0)                                        // ERROR 4: HashSet has Count, not Length
+                if (orderIds.Count == 0)
                 {
                     Console.WriteLine("No sales history to delete.");
                     return;
                 }
 
+
             }
+        }
     }
 }

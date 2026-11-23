@@ -12,8 +12,7 @@ namespace RestaurantOrderSystem
         const string RestaurantName = "Injels Burger";
         const int MaxQuantity = 99;
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
-        static readonly string OrdersFolder = Path.Combine(AppContext.BaseDirectory, "records");
-
+        
         static readonly string OrdersPath = Path.Combine(OrdersFolder, "orders.txt");
 
         // CUR 2: menu data in arrays with matching indexes
